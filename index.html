@@ -55,7 +55,7 @@
 					</button>
 					<!-- Logo -->
 					<div class="logo">
-						<a class="navbar-brand logo-w3l button" href="index.html" ><font color="#0000AA">SpineReminder</font></a>
+						<a class="navbar-brand logo-w3l button" href="index.html" ><font color="#FFF77" font-family:"AdobeFanHeitiStd-Bold">SpineReminder</font></a>
 					</div>
 					<!-- //Logo -->
 				</div>
@@ -63,9 +63,9 @@
 				<div id="navbar" class="navbar-collapse navbar-right collapse">
 					<ul class="nav navbar-nav navbar-right cross-effect" id="cross-effect">
 						<li>首頁</li>
-						<li><a id="setTime" href="setTime.html">久坐提醒設定</a></li>
-						<li><a id="sitError" href="sitError.html">錯誤坐姿一覽</a></li>
-						<li><a id="calendar" href="calendar.html">行事曆</a></li>
+						<li><a font-family:"AdobeFanHeitiStd-Bold" id="setTime" href="setTime.html">久坐提醒設定</a></li>
+						<li><a font-family:"AdobeFanHeitiStd-Bold" id="sitError" href="sitError.html">錯誤坐姿一覽</a></li>
+						<li><a font-family:"AdobeFanHeitiStd-Bold" id="calendar" href="calendar.html">行事曆</a></li>
 					</ul>
 				</div><!-- //Navbar-Collapse -->
 
@@ -120,10 +120,10 @@
 				<button type="button" class="btn btn-secondary" onclick="endTime()">結束</button>
 				<!--<button onclick="endTime()">結束</button>-->
 				<div class="alert alert-danger" role="alert">
-  					接下來要做的事：
-					<font size="4" color="#2F4F4F" id="nextEvent"></font>
+  					<font font-family:"AdobeFanHeitiStd-Bold.otf" size="4">接下來要做的事：</font>
+					<font font-family:"AdobeFanHeitiStd-Bold" size="4" color="#0066FF" id="nextEvent"></font>
 				</div>
-				<div class="alert alert-warning" role="alert">在座時間 <!--</div>-->
+				<div class="alert alert-warning" size=5 role="alert"><font color="#FF8888" size ="5">在座時間</font> <!--</div>-->
 
 				<section class="examples">
 					<!--<div class="simply-countdown-losange" id="simply-countdown-losange"></div>-->
@@ -150,7 +150,7 @@
 					
 				</section>
 
-				<div class="alert alert-info" role="alert">離座時間<!--</div>-->
+				<div class="alert alert-info" font-family:"AdobeFanHeitiStd-Bold" role="alert"><font color="#009FCC" size ="5">離座時間</font><!--</div>-->
 				
 				<section class="examples">
 					<!--<div class="simply-countdown-losange" id="simply-countdown-losange"></div>-->
@@ -187,8 +187,17 @@
 	<!-- TODO List -->
 	<div class="about-w3laits" id="about">
 		<div class="container">
-			<h1>TODO List</h1>
-			<p class="about-p-1-aits">About Something Remind You To Fix Your Sitting and Remind You Something to do in the next time. We must use app and sensors to reach what we want to do</p>
+			<h1 color="#666666">Todo List</h1>
+			
+				<div class="input-group mb-3">
+  			<div class="input-group-prepend">
+  		  <div class="input-group-text">
+     	 <input type="checkbox" aria-label="Checkbox for following text input">
+   		 </div>
+  			</div>
+  			<input type="text" class="form-control" aria-label="Text input with checkbox">
+			</div>
+			
 
 		</div>
 	</div>
@@ -362,12 +371,12 @@
 					}
 					
 					if(toDoEvent==null)
-						nextEvent.innerHTML="今日沒有代辦事項";
+						nextEvent.innerHTML="目前沒有待辦事項";
 					else
 						nextEvent.innerHTML=toDoEvent;
 				}
 				else
-					nextEvent.innerHTML="今日沒有代辦事項";
+					nextEvent.innerHTML="目前沒有待辦事項";
 				
 			},1000);
 			
