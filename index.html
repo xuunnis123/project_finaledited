@@ -381,7 +381,7 @@
 		function checkSit()
 		{
 			var updates = {};
-			
+			clearInterval(timer);
 			timer=setInterval(function () 
 			{	
 				time = localStorage.getItem("time");
