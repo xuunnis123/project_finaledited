@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title>calendar</title>
+	<link rel="stylesheet" href="build/mini-calendar.css">
+ 	<script src="build/mini-calendar.js"></script>
+	
+	 <!-- Meta-Tags -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="keywords" content="">
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<!-- //Meta-Tags -->
+	
+	<!-- Custom-Stylesheet-Links -->
+	<!-- Bootstrap-CSS --> 	<link rel="stylesheet" href="css/bootstrap.min.css"	type="text/css" media="all">
+	<!-- Index-Page-CSS --> <link rel="stylesheet" href="css/style.css" 		type="text/css" media="all">
+	<!-- Portfolio-CSS --> 	<link rel="stylesheet" href="css/smoothbox.css" 	type="text/css" media="all">
+	<!-- //Custom-Stylesheet-Links -->
+
+	<!--<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700"		type="text/css" media="all">
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton:300,400,700,800" 		type="text/css" media="all">
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900" type="text/css" media="all"> -->
+
+	<!-- Font-Awesome-File-Links -->
+	<!-- CSS --> <link rel="stylesheet" href="css/font-awesome.min.css" 	 type="text/css" media="all">
+	<!-- TTF --> <link rel="stylesheet" href="fonts/fontawesome-webfont.ttf" type="text/css" media="all">
+	<!-- //Font-Awesome-File-Links -->
+
+	<!-- Supportive-JavaScript --> <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	
+	<!-- ClockPicker -->
+	<link rel="stylesheet" type="text/css" href="clockpicker/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="clockpicker/dist/bootstrap-clockpicker.min.css">
+	
+</head>
+
+
+
+<!-- Body -->
+<body onload="changeTime()">
+
+	<!-- Header -->
+	<div class="header-aits" id="home">
+
+		<div class="header-info-w3ls">
+
+			<!-- Navigation -->
+			<nav class="navbar container navbar-inverse navbar-default">
+
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<!-- Logo -->
+					<div class="logo">
+						<a class="navbar-brand logo-w3l button" href="index.html" ><font color="#0000AA">SpineReminder</font></a>
+					</div>
+					<!-- //Logo -->
+				</div>
+
+				<div id="navbar" class="navbar-collapse navbar-right collapse">
+					<ul class="nav navbar-nav navbar-right cross-effect" id="cross-effect">
+						<li><a id="index" href="index.html">首頁</a></li>
+						<li><a id="setTime" href="setTime.html">久坐提醒設定</a></li>
+						<li><a id="sitError" href="sitError.html">錯誤坐姿一覽</a></li>
+						<li>行事曆</li>
+					</ul>
+				</div><!-- //Navbar-Collapse -->
+
+			</nav>
+			<!-- //Navigation -->
+
+		</div>
+
+
+
+		<!-- Slider-1 -->
+		<div class="slider-w3layouts">
+			<ul class="rslides-agileits" id="slider1">
+				<li>
+					<img src="images/slide-1.jpg" alt="W3layouts Agileits">
+				</li>
+				<li>
+					<img src="images/slide-2.jpg" alt="W3layouts Agileits">
+				</li>
+				<li>
+					<img src="images/slide-3.jpg" alt="W3layouts Agileits">
+				</li>
+				<li>
+					<img src="images/slide-4.jpg" alt="W3layouts Agileits">
+				</li>
+				<li>
+					<img src="images/slide-5.jpg" alt="W3layouts Agileits">
+				</li>
+				<li>
+					<img src="images/slide-6.jpg" alt="W3layouts Agileits">
+				</li>
+			</ul>
+		</div>
+		<!-- //Slider-1 -->
+
+		<div class="clearfix"></div>
+
+	</div>
+	<!-- //Header -->
+	
+	
+	
+	<section class="special-w3layouts" id="calendar">
+		
+	</section>	
+	
+	<script>
+			//初始化日历，以body作为容器
+			//var container = document.body;
+			var container = document.getElementById("calendar");
+			Calendar.controller.init(container);
+		</script>
+		<div style="padding: 0 0 0 100px;">
+			<input id="title" type="text" class="searchTerm" placeholder="行程">
+			<input id="place" type="text" class="searchTerm" placeholder="地點">
+			<!--<input id="time" type="text" class="searchTerm" placeholder="時間">-->
+			<!--<div class="input-group clockpicker searchTerm" id="time" >
+				<input type="text" class="form-control clockpicker searchTerm" id="time" value="時間" style="border-style:hidden;">
+			</div>-->
+			<input type="text" class="clockpicker searchTerm" id="time" placeholder="時間" 
+					readonly="readonly" onclick="toBottom()">
+			<button type="button" class="btn btn-warning" id="submit" onclick="x()" >新增</button>
+		</div>
+		
+		
+	
+	
+	
+	<!-- Function -->
+	
+	
+	<script>
+		var timeOnSit = localStorage.getItem('timeOnSit');
+		var timeOffSit = localStorage.getItem('timeOffSit');
+		
+		var timer=null;
+		
+	
+		function changeTime()
+		{
+		
+			clearInterval(timer);
+			// setInterval() 方法可按照指定的周期（以毫秒计）来调用函数或计算表达式。
+			timer=setInterval(function () 
+			{
+				if(localStorage.getItem("flagOnSit")=="true")
+				{
+					timeOnSit++;
+					timeOffSit=0;
+				}
+				else
+				{
+					timeOffSit++;
+					timeOnSit=0;
+				}
+				localStorage.setItem('timeOnSit',timeOnSit);
+				localStorage.setItem('timeOffSit',timeOffSit);
+				
+			},1000);
+		}
+					
+
+		function y(value)
+		{
+			localStorage.setItem('selectEvent',value);
+			document.location.href="edit_delete.html";
+		}
+	
+	function x()
+	{
+		var title = document.getElementById("title");
+		var place = document.getElementById("place");
+		var time = document.getElementById("time");
+		
+		var before_event=localStorage.getItem(select_year.toString()+"-"+select_month.toString()+"-"+select_day.toString());
+		
+		var new_event;
+		var d = document.getElementById("details");
+		var s = select_year + "年 " + select_month + "月 " + select_day + "日 "+select_weekday;
+		var arrayEvent = [];
+		var arrayEventTime = [];
+		var event=[];
+		var minutes = [];
+		var thisEventMinutes;
+		var i,j;
+		
+
+		if(title.value!="")
+		{
+			if(before_event!=null && before_event!="")
+			{
+				new_event=before_event+"+"+title.value+"."+place.value+"."+time.value;
+				arrayEvent=new_event.split("+");
+				
+				
+				//取出事件時間Array
+				for(i=0;i<arrayEvent.length;i++)
+				{
+					event=arrayEvent[i].split(".");
+					minutes = event[2].split(":");
+					arrayEventTime[i]=parseInt(minutes[0])*60+parseInt(minutes[1]);
+					//alert(arrayEventTime[i]);
+				}
+				
+				
+				//依時間排序
+				for(i=0;i<arrayEvent.length;i++)
+				{
+					for(j=0;j<arrayEvent.length-i;j++)
+					{
+						if(arrayEventTime[j]>arrayEventTime[j+1])
+						{
+							var tempEvent = arrayEvent[j];
+							arrayEvent[j] = arrayEvent[j+1];
+							arrayEvent[j+1] = tempEvent;
+							var tempEvent = arrayEventTime[j];
+							arrayEventTime[j] = arrayEventTime[j+1];
+							arrayEventTime[j+1] = tempEvent;
+						}
+					}
+				}
+				
+				
+				new_event="";
+				//加入Button
+				for(i=0;i<arrayEvent.length;i++)
+				{	
+					if(i!=arrayEvent.length-1)
+						new_event += arrayEvent[i]+"+";
+					else
+						new_event += arrayEvent[i];
+					
+					event=arrayEvent[i].split(".");
+					s+="<br>"+"<button class='btn btn-success' onclick='y(this.value)'  value='"+arrayEvent[i]+"'>"+"時間:"+event[2]+"/事情:"+event[0]+"</button>";
+				}
+				localStorage.setItem(select_year.toString()+"-"+select_month.toString()+"-"+select_day.toString(),new_event);
+			}
+			else
+			{
+				new_event=title.value+"."+place.value+"."+time.value;
+				localStorage.setItem(select_year.toString()+"-"+select_month.toString()+"-"+select_day.toString(),new_event);
+				arrayEvent=new_event.split("+");
+				for(i=0;i<arrayEvent.length;i++)
+				{
+					var event=[];
+					event=arrayEvent[i].split(".");
+					s+="<br>"+"<button class='btn btn-success' onclick='y(this.value)'  value='"+arrayEvent[i]+"'>"+"時間:"+event[2]+"/事情:"+event[0]+"</button>";
+				}	
+			}	
+		}
+		else
+		{
+			if(before_event!=null)
+			{
+				arrayEvent=before_event.split("+");
+				for(i=0;i<arrayEvent.length;i++)
+				{
+					var event=[];
+					event=arrayEvent[i].split(".");
+					s+="<br>"+"<button class='btn btn-success' onclick='y(this.value)'  value='"+arrayEvent[i]+"'>"+"時間:"+event[2]+"/事情:"+event[0]+"</button>";
+				}	
+			}
+		}	
+		d.innerHTML=s;
+	}
+	
+	function toBottom()
+	{
+		window.scrollTo(0,document.body.scrollHeight);
+	}
+	</script>
+	
+
+	<!-- Custom-JavaScript-File-Links -->
+
+		
+		<!-- Necessary-JS-File-For-Bootstrap --> <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+		<!-- Slider-JavaScript -->
+			<script src="js/responsiveslides.min.js"></script>
+			<script>
+				$(function () {
+					$("#slider1, #slider2").responsiveSlides({
+						auto: true,
+						nav: true,
+						speed: 1500,
+						namespace: "callbacks",
+						pager: true,
+					});
+				});
+			</script>
+		<!-- //Slider-JavaScript -->
+		
+		
+
+		<!-- Slide-To-Top JavaScript -->
+			<script type="text/javascript">
+				$(document).ready(function() {
+					var defaults = {
+						containerID: 'toTop', // fading element id
+						containerHoverID: 'toTopHover', // fading element hover id
+						scrollSpeed: 100,
+						easingType: 'linear'
+					};
+					$().UItoTop({ easingType: 'easeOutQuart' });
+				});
+			</script>
+			<a href="#" class="W3layoutsw3lts Agileitsaits" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 0;"> </span></a>
+		<!-- //Slide-To-Top JavaScript -->
+
+		<!-- Smooth-Scrolling-JavaScript -->
+			<script type="text/javascript" src="js/move-top.js"></script>
+			<script type="text/javascript" src="js/easing.js"></script>
+			<script type="text/javascript">
+				jQuery(document).ready(function($) {
+					$(".scroll").click(function(event){
+						event.preventDefault();
+						$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+					});
+				});
+			</script>
+		<!-- //Smooth-Scrolling-JavaScript -->
+
+	<!-- //Custom-JavaScript-File-Links -->
+	
+	
+<!-- ClockPicker -->
+<script type="text/javascript" src="clockpicker/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="clockpicker/assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="clockpicker/dist/bootstrap-clockpicker.min.js"></script>
+<script type="text/javascript">
+$('.clockpicker').clockpicker()
+	.find('input').change(function(){
+		console.log(this.value);
+	});
+var input = $('#single-input').clockpicker({
+	placement: 'bottom',
+	align: 'left',
+	autoclose: true,
+	'default': 'now'
+});
+</script>
+<script type="text/javascript" src="clockpicker/assets/js/highlight.min.js"></script>
+<script type="text/javascript">
+hljs.configure({tabReplace: '    '});
+hljs.initHighlightingOnLoad();
+</script>
+	
+</body>
+<!-- //Body -->
+
+
+
+</html>
