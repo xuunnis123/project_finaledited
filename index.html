@@ -216,8 +216,8 @@
 		var timeOffSit=0;
 		
 		var timer=null;
-		var url;
 		var flagOnSit;
+		var time;
 		
 		var hours_onsit = document.getElementById("hours_onsit");
 		var minutes_onsit = document.getElementById("minutes_onsit");
@@ -306,30 +306,6 @@
 		}
 		
 	*/
-
-		//取得網址上的參數	
-		function getValue(value)
-		{
-			var url=window.location.toString(); //取得當前網址   
-			var str=""; //參數中等號左邊的值   
-			var str_value=""; //參數中等號右邊的值   
-			if(url.indexOf("?")!=-1){   
-				//如果網址有"?"符號   
-				var ary=url.split("?")[1].split("&");   
-				//取得"?"右邊網址後利用"&"分割字串存入ary陣列 ["a=1","b=2","c=3"]   
-				for(var i in ary){   
-					//取得陣列長度去跑迴圈，如:網址有三個參數，則會跑三次   
-					str=ary[i].split("=")[0];   
-					//取得參數"="左邊的值存入str變數中   
-					if (str == value) {   
-					//若str等於想要抓取參數 如:b   
-						str_value = decodeURI(ary[i].split("=")[1]);   
-						//取得b等號右邊的值並經過中文轉碼後存入str_value   
-					}   
-				}   
-			}   
-			return str_value;
-		}
 		
 		function getNextEvent()
 		{
@@ -404,9 +380,11 @@
 	  		
 		function checkSit()
 		{
+			var updates = {};
 			
 			timer=setInterval(function () 
-			{
+			{	
+				time = localStorage.getItem("time");
 				timeOnSit = localStorage.getItem("timeOnSit");
 				timeOffSit = localStorage.getItem("timeOffSit");
 				
@@ -443,6 +421,13 @@
 					minutes_onsit.innerHTML=m;
 					seconds_onsit.innerHTML=s;
 					
+					if(timeOnSit%time==0)
+					{
+						updates['/project_test/time'] = true;
+						firebase.database().ref().update(updates);
+					}
+					updates['/project_test/time'] = false;
+					firebase.database().ref().update(updates);
 				}
 				else//站著
 				{
